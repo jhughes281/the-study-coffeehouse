@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Study — Coffee, Books &amp; Late Pours</title>
+<meta name="description" content="The Study is a coffeehouse and lending library: curated coffee, twisted signatures, spirited pours after 2pm, plush leather seating, private rooms, and shelves you can borrow from or buy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23201512'/><path d='M28 40h36v22a12 12 0 0 1-12 12H40a12 12 0 0 1-12-12z' fill='%23F1E5D3'/><path d='M64 44h8a8 8 0 0 1 0 16h-8' fill='none' stroke='%23F1E5D3' stroke-width='5'/></svg>">
+<style>
+  :root {
+    --espresso: #201512;   /* warm black-brown page */
+    --roast: #2B1C15;      /* panels */
+    --leather: #5C3A26;    /* chesterfield */
+    --caramel: #CE9159;
+    --cream: #F1E5D3;
+    --foam: #C7B098;       /* muted text */
+    --brass: #B99157;
+    --seam: #43301F;       /* hairlines, like stitching */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--espresso);
+    color: var(--cream);
+    font-family: 'Figtree', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: 'Young Serif', serif; font-weight: 400; line-height: 1.12; }
+  .mono { font-family: 'Space Mono', monospace; }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--caramel);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap { width: min(1120px, 92%); margin: 0 auto; }
+  section { padding: 5.5rem 0; }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: .78rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--caramel);
+    display: block; margin-bottom: 1rem;
+  }
+  .section-head { max-width: 40rem; margin-bottom: 2.8rem; }
+  .section-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom: .7rem; }
+  .section-head p { color: var(--foam); }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(32, 21, 18, .92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--seam);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.05rem 0; }
+  .wordmark {
+    font-family: 'Young Serif', serif; font-size: 1.25rem; text-decoration: none;
+  }
+  .wordmark span { color: var(--caramel); }
+  .nav-links { display: flex; gap: 1.7rem; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--foam);
+    font-size: .92rem; font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a.pill {
+    color: var(--espresso); background: var(--caramel);
+    padding: .5rem 1.15rem; border-radius: 999px; font-weight: 700;
+  }
+  .nav-links a.pill:hover { background: #DDA36C; color: var(--espresso); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 7.5rem 0 6.5rem;
+    min-height: 82vh;
+    display: flex; align-items: center;
+    background:
+      linear-gradient(to bottom, rgba(32,21,18,.5) 0%, rgba(32,21,18,.28) 45%, var(--espresso) 97%),
+      linear-gradient(100deg, rgba(32,21,18,.93) 0%, rgba(32,21,18,.7) 44%, rgba(32,21,18,.22) 78%),
+      url('images/hero-cafe-1400.jpg') 62% 42% / cover no-repeat var(--espresso);
+  }
+  .hero-grid > div { max-width: 40rem; }
+  .hero h1 { font-size: clamp(2.5rem, 5.2vw, 4rem); margin-bottom: 1.3rem; }
+  .hero h1 em { font-style: normal; color: var(--caramel); }
+  .hero p.lede { color: var(--foam); max-width: 33rem; margin-bottom: 2rem; font-size: 1.12rem; }
+  .btn-row { display: flex; gap: .9rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-weight: 700; font-size: .98rem;
+    padding: .75rem 1.6rem; border-radius: 999px;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-solid { background: var(--caramel); color: var(--espresso); }
+  .btn-solid:hover { background: #DDA36C; transform: translateY(-2px); }
+  .btn-ghost { border: 1.5px solid var(--leather); color: var(--cream); }
+  .btn-ghost:hover { border-color: var(--caramel); transform: translateY(-2px); }
+
+  .hero-hours {
+    margin-top: 2.4rem; display: flex; gap: 2rem; flex-wrap: wrap;
+    font-family: 'Space Mono', monospace; font-size: .8rem; color: var(--foam);
+    letter-spacing: .04em;
+  }
+  .hero-hours b { color: var(--cream); font-weight: 700; display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+
+  /* ---------- MENU + DIAL ---------- */
+  #menu { background: var(--roast); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); transition: background .6s ease; }
+  #menu.deep { background: #241410; }
+
+  .dial {
+    display: flex; align-items: center; gap: 0; width: fit-content;
+    border: 1.5px solid var(--brass); border-radius: 999px;
+    margin-bottom: .9rem; overflow: hidden;
+  }
+  .dial button {
+    appearance: none; border: 0; background: transparent; cursor: pointer;
+    font-family: 'Space Mono', monospace; font-size: .82rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--foam);
+    padding: .7rem 1.5rem;
+    border-right: 1.5px solid var(--brass);
+    transition: background .2s ease, color .2s ease;
+  }
+  .dial button:last-child { border-right: 0; }
+  .dial button[aria-selected="true"] { background: var(--brass); color: var(--espresso); font-weight: 700; }
+  .dial button:hover:not([aria-selected="true"]) { color: var(--cream); }
+
+  .dial-note {
+    font-family: 'Space Mono', monospace; font-size: .78rem;
+    color: var(--foam); margin-bottom: 2.2rem; min-height: 1.4em;
+  }
+  .dial-note em { font-style: normal; color: var(--caramel); }
+
+  .menu-flex { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.6rem; align-items: start; }
+  .menu-photo-frame {
+    position: relative; border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--seam);
+    aspect-ratio: 4 / 5;
+  }
+  .menu-photo-frame::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(32,21,18,.35), transparent 45%);
+    pointer-events: none;
+  }
+  .menu-photo-frame img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: opacity .35s ease;
+  }
+  .menu-photo-frame figcaption {
+    position: absolute; left: 1rem; bottom: .8rem; z-index: 1;
+    font-family: 'Space Mono', monospace; font-size: .72rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--cream);
+  }
+
+  .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem 3rem; }
+  .menu-flex .menu-list { grid-template-columns: 1fr; }
+  .menu-item {
+    display: flex; align-items: baseline; gap: .8rem;
+    padding: .9rem 0; border-bottom: 1px solid var(--seam);
+  }
+  .menu-item .name { font-weight: 600; white-space: nowrap; }
+  .menu-item .dots { flex: 1; border-bottom: 1.5px dotted var(--leather); transform: translateY(-4px); }
+  .menu-item .price { font-family: 'Space Mono', monospace; font-size: .9rem; color: var(--caramel); }
+  .menu-item .desc {
+    flex-basis: 100%; color: var(--foam); font-size: .92rem; margin-top: -.5rem;
+  }
+  .menu-item { flex-wrap: wrap; }
+
+  .bites { margin-top: 3.5rem; }
+  .bites h3 { font-size: 1.35rem; margin-bottom: 1.2rem; }
+  .bites-row { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .bite {
+    font-size: .92rem; color: var(--cream);
+    border: 1px solid var(--seam); border-radius: 999px;
+    padding: .45rem 1.1rem; background: rgba(92,58,38,.18);
+  }
+  .bite b { color: var(--caramel); font-weight: 700; font-family: 'Space Mono', monospace; font-size: .82rem; }
+
+  /* ---------- SPACES ---------- */
+  .spaces-flex { display: grid; grid-template-columns: .62fr 1.38fr; gap: 1.4rem; align-items: stretch; }
+  .spaces-photo {
+    border-radius: 10px; overflow: hidden; border: 1px solid var(--seam);
+    position: relative; min-height: 320px;
+  }
+  .spaces-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .spaces-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(32,21,18,.45), transparent 40%);
+  }
+  .spaces-photo figcaption {
+    position: absolute; left: 1.1rem; bottom: .9rem; z-index: 1;
+    font-family: 'Space Mono', monospace; font-size: .72rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--cream);
+  }
+  .space-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+  .space {
+    background: var(--roast);
+    border: 1px solid var(--seam);
+    border-radius: 10px;
+    padding: 2rem 1.9rem;
+    position: relative;
+  }
+  .space::before {
+    content: ''; position: absolute; inset: 8px;
+    border: 1px solid rgba(185,145,87,.25); border-radius: 6px;
+    pointer-events: none;
+  }
+  .space .mono {
+    font-size: .74rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--brass); display: block; margin-bottom: .9rem;
+  }
+  .space h3 { font-size: 1.45rem; margin-bottom: .6rem; }
+  .space p { color: var(--foam); font-size: .97rem; }
+  .space ul { list-style: none; margin-top: 1rem; }
+  .space li {
+    color: var(--cream); font-size: .92rem; padding: .28rem 0 .28rem 1.4rem; position: relative;
+  }
+  .space li::before {
+    content: ''; position: absolute; left: 0; top: .78em;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--caramel);
+  }
+
+  /* ---------- LIBRARY ---------- */
+  #library { background: var(--roast); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); }
+  .library-grid { display: grid; grid-template-columns: 1fr .9fr; gap: 3.5rem; align-items: center; }
+  .library-copy p { color: var(--foam); margin-bottom: 1.1rem; }
+  .library-copy p b { color: var(--cream); }
+
+  .lib-card {
+    background: var(--cream); color: #33241B;
+    border-radius: 6px; padding: 1.8rem 1.9rem;
+    font-family: 'Space Mono', monospace;
+    box-shadow: 6px 8px 0 rgba(0,0,0,.35);
+    transform: rotate(-1.2deg);
+    max-width: 26rem; justify-self: center; width: 100%;
+  }
+  .lib-card h3 {
+    font-family: 'Space Mono', monospace; font-weight: 700; font-size: .95rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    border-bottom: 2px solid #33241B; padding-bottom: .6rem; margin-bottom: 1rem;
+  }
+  .lib-card table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  .lib-card th {
+    text-align: left; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    font-size: .7rem; padding: .4rem .3rem; border-bottom: 1.5px solid #33241B;
+  }
+  .lib-card td { padding: .55rem .3rem; border-bottom: 1px dashed rgba(51,36,27,.4); }
+  .lib-card .stamp {
+    display: inline-block; margin-top: 1.2rem;
+    border: 2px solid #8A3B2A; color: #8A3B2A;
+    padding: .25rem .8rem; border-radius: 4px;
+    font-weight: 700; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    transform: rotate(-3deg);
+  }
+
+  /* ---------- VISIT ---------- */
+  .visit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+  .visit-card {
+    border: 1px solid var(--seam); border-radius: 10px; padding: 1.7rem 1.6rem;
+    background: var(--roast);
+  }
+  .visit-card h3 { font-size: 1.15rem; margin-bottom: .8rem; color: var(--caramel); }
+  .visit-card p, .visit-card li { color: var(--foam); font-size: .95rem; }
+  .visit-card ul { list-style: none; }
+  .visit-card li { display: flex; justify-content: space-between; padding: .2rem 0; }
+  .visit-card li b { color: var(--cream); font-weight: 600; }
+  .visit-card a { color: var(--cream); }
+  .visit-photo {
+    grid-column: 1 / -1;
+    border-radius: 10px; overflow: hidden; border: 1px solid var(--seam);
+    position: relative; height: 240px;
+  }
+  .visit-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block; }
+
+  footer {
+    border-top: 1px solid var(--seam);
+    padding: 1.7rem 0;
+  }
+  footer .wrap {
+    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    font-family: 'Space Mono', monospace; font-size: .76rem; color: var(--foam);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .menu-list { grid-template-columns: 1fr; }
+    .menu-flex { grid-template-columns: 1fr; }
+    .menu-photo-frame { aspect-ratio: 16 / 10; max-height: 340px; width: 100%; order: -1; }
+    .spaces-flex { grid-template-columns: 1fr; }
+    .spaces-photo { min-height: 240px; }
+    .space-grid { grid-template-columns: 1fr; }
+    .library-grid { grid-template-columns: 1fr; }
+    .lib-card { justify-self: start; }
+    .visit-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links li:not(:last-child) { display: none; }
+    .dial button { padding: .65rem .9rem; font-size: .72rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#">The <span>Study</span></a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#spaces">Spaces</a></li>
+      <li><a href="#library">The Stacks</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a class="pill" href="#visit">Book a room</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Coffeehouse · Lending library · Late pours</span>
+      <h1>Come for the coffee. <em>Stay for the chapter.</em></h1>
+      <p class="lede">The Study is a coffeehouse built for lingering — curated pours, plush leather seats, a charging port at every table, and a library you can borrow from or buy out. After 2pm, the menu grows a proof.</p>
+      <div class="btn-row">
+        <a class="btn btn-solid" href="#menu">See the menu</a>
+        <a class="btn btn-ghost" href="#spaces">Tour the spaces</a>
+      </div>
+      <div class="hero-hours" aria-label="Hours summary">
+        <div><b>Mon–Thu</b> 7a – 9p</div>
+        <div><b>Fri–Sat</b> 7a – 11p</div>
+        <div><b>Sun</b> 8a – 6p</div>
+        <div><b>Spirited menu</b> after 2p · 21+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The pour</span>
+      <h2>Turn the dial to your strength</h2>
+      <p>Three menus, one bar. Start curated, drift into the twists, and after 2pm the dial goes all the way to spirited.</p>
+    </div>
+
+    <div class="dial" role="tablist" aria-label="Menu strength">
+      <button role="tab" aria-selected="true" data-tier="curated" id="tab-curated">Curated</button>
+      <button role="tab" aria-selected="false" data-tier="twist" id="tab-twist">With a Twist</button>
+      <button role="tab" aria-selected="false" data-tier="spirited" id="tab-spirited">Spirited</button>
+    </div>
+    <p class="dial-note" id="dial-note">Single origins, dialed in daily.</p>
+
+    <div class="menu-flex">
+      <div class="menu-list" id="menu-list" role="tabpanel" aria-live="polite"></div>
+      <figure class="menu-photo-frame" id="menu-photo-frame" hidden>
+        <img id="menu-photo" alt="" src="">
+        <figcaption id="menu-photo-caption"></figcaption>
+      </figure>
+    </div>
+
+    <div class="bites">
+      <h3>Lite bites, all day</h3>
+      <div class="bites-row">
+        <span class="bite">Butter croissant <b>$4</b></span>
+        <span class="bite">Ham &amp; gruyère croissant <b>$7</b></span>
+        <span class="bite">Avocado toast <b>$9</b></span>
+        <span class="bite">Quiche of the day <b>$8</b></span>
+        <span class="bite">Charcuterie box <b>$14</b></span>
+        <span class="bite">Biscotti pair <b>$3</b></span>
+        <span class="bite">Seasonal fruit &amp; honey yogurt <b>$6</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spaces">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The spaces</span>
+      <h2>Plush leather, warm light, and a seat for every kind of day</h2>
+      <p>Deep chesterfield seating throughout, charging ports built into every table, and rooms you can close the door on.</p>
+    </div>
+    <div class="spaces-flex">
+    <figure class="spaces-photo" id="spaces-photo" hidden>
+      <img src="images/chalkboard.webp" alt="Chalkboard menu wall above the espresso machine at the bar" onerror="document.getElementById('spaces-photo').hidden = true" onload="document.getElementById('spaces-photo').hidden = false">
+      <figcaption>The bar · order here</figcaption>
+    </figure>
+    <div class="space-grid">
+      <div class="space">
+        <span class="mono">For studying</span>
+        <h3>The Nook</h3>
+        <p>Wingback chairs, reading lamps, and a quiet-floor policy. Claim a corner and disappear into your notes.</p>
+        <ul>
+          <li>Quiet floor — low conversation</li>
+          <li>Reading lamps at every seat</li>
+          <li>Refill happy hour for students, 3–5p</li>
+        </ul>
+      </div>
+      <div class="space">
+        <span class="mono">For working</span>
+        <h3>The Desk</h3>
+        <p>Long leather-topped tables built for a full workday away from the home office.</p>
+        <ul>
+          <li>Charging ports &amp; outlets at every seat</li>
+          <li>Fast Wi-Fi, no time limits</li>
+          <li>Bottomless drip while you work</li>
+        </ul>
+      </div>
+      <div class="space">
+        <span class="mono">For meetings</span>
+        <h3>The Parlor</h3>
+        <p>Private rooms behind real doors — book by the hour for meetings, interviews, or a call you'd rather not take at the table.</p>
+        <ul>
+          <li>Seats 4–10, bookable by the hour</li>
+          <li>Screen, whiteboard &amp; conference speaker</li>
+          <li>Coffee service brought to the room</li>
+        </ul>
+      </div>
+      <div class="space">
+        <span class="mono">For play dates</span>
+        <h3>The Corner</h3>
+        <p>A softer landing near the shelves — picture books, board games, and seats where grown-ups can actually finish a latte.</p>
+        <ul>
+          <li>Kid shelf &amp; board game wall</li>
+          <li>Steamed milk "babyccinos" on the house</li>
+          <li>Wipeable everything</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="library">
+  <div class="wrap library-grid">
+    <div class="library-copy">
+      <span class="eyebrow">The stacks</span>
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem); margin-bottom:1rem;">A library where the due date is optional</h2>
+      <p>Every shelf in The Study is live: <b>borrow any book</b> with a house library card, or <b>buy it outright</b> and take it home for good. Finish it in a wingback with a cortado, or don't finish it at all — renewals are free with any drink.</p>
+      <p>New and used, fiction and field guides, plus a rotating shelf picked by the baristas. Trade a finished book back in for credit toward your next pour.</p>
+      <a class="btn btn-ghost" href="#visit" style="margin-top:.6rem;">Get a library card</a>
+    </div>
+    <div class="lib-card" role="img" aria-label="Sample library checkout card showing borrow and buy prices">
+      <h3>The Study · Reader's Card</h3>
+      <table>
+        <thead>
+          <tr><th>Shelf</th><th>Borrow</th><th>Buy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Paperbacks</td><td>$2 / 2 wks</td><td>$6–10</td></tr>
+          <tr><td>Hardcovers</td><td>$3 / 2 wks</td><td>$12–24</td></tr>
+          <tr><td>Kids' shelf</td><td>free w/ drink</td><td>$4–8</td></tr>
+          <tr><td>Barista picks</td><td>$2 / 2 wks</td><td>ask the bar</td></tr>
+        </tbody>
+      </table>
+      <span class="stamp">Renewed · free with any pour</span>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Visit</span>
+      <h2>Pull up a chair</h2>
+      <p>Walk-ins always; the Parlor books ahead. Spirited menu pours after 2pm for guests 21 and over.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-card">
+        <h3>Hours</h3>
+        <ul>
+          <li><b>Mon–Thu</b> 7:00a – 9:00p</li>
+          <li><b>Fri–Sat</b> 7:00a – 11:00p</li>
+          <li><b>Sun</b> 8:00a – 6:00p</li>
+          <li><b>Spirited menu</b> after 2:00p</li>
+        </ul>
+      </div>
+      <div class="visit-card">
+        <h3>Find us</h3>
+        <p>[Street Address]<br>[City, State ZIP]</p>
+        <p style="margin-top:.7rem;">[Phone Number]<br><a href="mailto:hello@example.com">hello@example.com</a></p>
+      </div>
+      <div class="visit-card">
+        <h3>Book the Parlor</h3>
+        <p>Private rooms by the hour — meetings, study groups, book clubs, or a very quiet birthday.</p>
+        <p style="margin-top:.7rem;"><a class="btn btn-solid" href="mailto:hello@example.com?subject=Parlor%20booking">Request a room</a></p>
+      </div>
+      <figure class="visit-photo" id="visit-photo" hidden>
+        <img src="images/neon.webp" alt="A neon sign reading COFFEE glowing against a concrete column" onerror="document.getElementById('visit-photo').hidden = true" onload="document.getElementById('visit-photo').hidden = false">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 The Study · Coffee, Books &amp; Late Pours</span>
+    <span>Please sip responsibly — spirited pours are 21+.</span>
+  </div>
+</footer>
+
+<script>
+const MENUS = {
+  curated: {
+    note: 'Single origins, dialed in daily.',
+    items: [
+      ['Pour-over, single origin', '$5.5', 'Rotating farm lots, brewed to order on the V60.'],
+      ['Espresso', '$3.5', 'Our house blend — cocoa, cherry, a long finish.'],
+      ['Cortado', '$4.5', 'Equal parts espresso and steamed milk, no fuss.'],
+      ['Flat white', '$5', 'Velvet milk over a double ristretto.'],
+      ['24-hour cold brew', '$5', 'Steeped slow, poured over one big cube.'],
+      ['Chemex for two', '$9', 'A full carafe and two cups. Bring company.'],
+    ],
+  },
+  twist: {
+    note: 'House signatures — familiar drinks, <em>unfamiliar turns</em>.',
+    items: [
+      ['Brown butter toffee latte', '$6.5', 'Browned butter syrup, flaky salt on the foam.'],
+      ['Cardamom rose cold brew', '$6', 'Cold brew over cardamom syrup and a whisper of rose.'],
+      ['Maple-smoked mocha', '$7', 'Dark chocolate, smoked maple, torched marshmallow lid.'],
+      ['Horchata espresso', '$6.5', 'Double shot poured through cinnamon-rice horchata.'],
+      ['Orange-honey cappuccino', '$6', 'Orange zest folded into honeyed foam.'],
+      ['The Librarian', '$7', 'Earl Grey misto with vanilla and toasted oat milk. Shh.'],
+    ],
+  },
+  spirited: {
+    note: 'After 2pm · 21+ with ID · <em>the dial goes all the way</em>.',
+    items: [
+      ['Irish coffee', '$11', 'Hot drip, Irish whiskey, demerara, hand-whipped cream.'],
+      ['Espresso martini', '$13', 'Our espresso, vodka, coffee liqueur — properly foamy.'],
+      ['Bourbon caramel latte', '$12', 'Kentucky bourbon, burnt caramel, steamed whole milk.'],
+      ['Amaretto affogato', '$10', 'Vanilla gelato drowned in espresso and amaretto.'],
+      ['Baileys cold brew float', '$11', 'Cold brew, Irish cream, and a scoop of coffee ice cream.'],
+      ['The Nightcap', '$12', 'Decaf pour-over, aged rum, orange bitters — for the last chapter.'],
+    ],
+  },
+};
+
+const TIER_PHOTOS = {
+  curated:  { src: 'images/curated.webp',  caption: 'Curated · dialed in',   alt: 'Four cups of latte art on a round wooden table, seen from above' },
+  twist:    { src: 'images/twist.webp',    caption: 'Twist · poured slow',   alt: 'Cream being poured into two glasses of iced coffee' },
+  spirited: { src: 'images/spirited.webp', caption: 'Spirited · after 2pm',  alt: 'The bar at night — bottles, taps, and warm pendant lights' },
+};
+
+const list = document.getElementById('menu-list');
+const note = document.getElementById('dial-note');
+const menuSection = document.getElementById('menu');
+const tabs = document.querySelectorAll('.dial button');
+const photoFrame = document.getElementById('menu-photo-frame');
+const photo = document.getElementById('menu-photo');
+const photoCaption = document.getElementById('menu-photo-caption');
+
+photo.addEventListener('load', () => { photoFrame.hidden = false; photo.style.opacity = 1; });
+photo.addEventListener('error', () => { photoFrame.hidden = true; });
+
+function renderMenu(tier) {
+  const m = MENUS[tier];
+  const ph = TIER_PHOTOS[tier];
+  photo.style.opacity = 0;
+  photo.alt = ph.alt;
+  photoCaption.textContent = ph.caption;
+  photo.src = ph.src;
+  note.innerHTML = m.note;
+  list.innerHTML = m.items.map(([name, price, desc]) =>
+    `<div class="menu-item">
+       <span class="name">${name}</span>
+       <span class="dots" aria-hidden="true"></span>
+       <span class="price">${price}</span>
+       <span class="desc">${desc}</span>
+     </div>`).join('');
+  menuSection.classList.toggle('deep', tier === 'spirited');
+  tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.tier === tier)));
+}
+
+tabs.forEach(t => t.addEventListener('click', () => renderMenu(t.dataset.tier)));
+
+/* arrow-key support on the dial */
+document.querySelector('.dial').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const order = ['curated', 'twist', 'spirited'];
+  const current = [...tabs].find(t => t.getAttribute('aria-selected') === 'true');
+  let i = order.indexOf(current.dataset.tier) + (e.key === 'ArrowRight' ? 1 : -1);
+  i = (i + order.length) % order.length;
+  renderMenu(order[i]);
+  [...tabs].find(t => t.dataset.tier === order[i]).focus();
+});
+
+renderMenu('curated');
+</script>
+</body>
+</html>
