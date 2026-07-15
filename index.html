@@ -291,6 +291,33 @@
     background: var(--caramel);
   }
 
+  /* ---------- CURATORS ---------- */
+  .curator-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.6rem;
+    align-items: start; justify-items: center;
+    max-width: 56rem; margin: 0 auto;
+  }
+  .polaroid {
+    background: var(--cream); color: #33241B;
+    padding: .85rem .85rem 1rem;
+    box-shadow: 6px 8px 0 rgba(0,0,0,.35);
+    max-width: 100%;
+  }
+  .curator-grid .polaroid:nth-child(1) { transform: rotate(-1.4deg); }
+  .curator-grid .polaroid:nth-child(2) { transform: rotate(1deg); }
+  .polaroid img { display: block; width: 100%; height: auto; }
+  .polaroid figcaption {
+    font-family: 'Space Mono', monospace;
+    padding-top: .9rem; text-align: center;
+  }
+  .polaroid figcaption b {
+    display: block; font-size: .92rem; letter-spacing: .04em;
+  }
+  .polaroid figcaption span {
+    font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(51,36,27,.65);
+  }
+
   /* ---------- LIBRARY ---------- */
   #library { background: var(--roast); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); }
   .library-grid { display: grid; grid-template-columns: 1fr .9fr; gap: 3.5rem; align-items: center; }
@@ -363,6 +390,7 @@
     .menu-list { grid-template-columns: 1fr; }
     .menu-flex { grid-template-columns: 1fr; }
     .bites { grid-template-columns: 1fr; gap: 1.8rem; }
+    .curator-grid { grid-template-columns: 1fr; gap: 2.2rem; max-width: 24rem; }
     .bites-copy { text-align: center; }
     .bites-copy p { margin: 0 auto; }
     .menu-photo-frame { aspect-ratio: 16 / 10; max-height: 340px; width: 100%; order: -1; }
@@ -387,6 +415,7 @@
     <ul class="nav-links">
       <li><a href="#menu">Menu</a></li>
       <li><a href="#spaces">Spaces</a></li>
+      <li><a href="#curators">Curators</a></li>
       <li><a href="#library">The Stacks</a></li>
       <li><a href="#visit">Visit</a></li>
       <li><a class="pill" href="#visit">Book a room</a></li>
@@ -521,10 +550,36 @@
   </div>
 </section>
 
+<section id="curators">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="chapter"><span>Ch. 3 · The Curators</span></p>
+      <h2>Meet the curators</h2>
+      <p>Every drink on the dial was argued over, tasted twice, and signed off behind this bar. Curated coffee is a job title here, not a buzzword.</p>
+    </div>
+    <div class="curator-grid">
+      <figure class="polaroid">
+        <img src="images/curator-solo.jpg" alt="A curator smiling behind the bar, mid-shake with a cocktail tin, wearing a leather-strap apron">
+        <figcaption>
+          <b>[Curator Name]</b>
+          <span>Spirited &amp; twisted pours</span>
+        </figcaption>
+      </figure>
+      <figure class="polaroid">
+        <img src="images/curators-duo.jpg" alt="Two curators behind the bar in matching aprons, one waving hello">
+        <figcaption>
+          <b>[Curator Name] &amp; [Curator Name]</b>
+          <span>The full curation department</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section id="library">
   <div class="wrap library-grid">
     <div class="library-copy">
-      <p class="chapter" style="justify-content:flex-start;"><span>Ch. 3 · The Stacks</span></p>
+      <p class="chapter" style="justify-content:flex-start;"><span>Ch. 4 · The Stacks</span></p>
       <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem); margin-bottom:1rem;">A library where the due date is optional</h2>
       <p class="lib-lede">Every shelf in The Study is live: <b>borrow any book</b> with a house library card, or <b>buy it outright</b> and take it home for good. Finish it in a wingback with a cortado, or don't finish it at all — renewals are free with any drink.</p>
       <p>New and used, fiction and field guides, plus a rotating shelf picked by the baristas. Trade a finished book back in for credit toward your next pour.</p>
