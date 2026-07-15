@@ -52,9 +52,31 @@
     color: var(--caramel);
     display: block; margin-bottom: 1rem;
   }
-  .section-head { max-width: 40rem; margin-bottom: 2.8rem; }
+
+  /* book-chapter section heads */
+  .chapter {
+    display: flex; align-items: center; justify-content: center; gap: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .chapter::before, .chapter::after {
+    content: ''; height: 1px; width: min(84px, 18vw);
+    background: linear-gradient(90deg, transparent, var(--brass));
+  }
+  .chapter::after { background: linear-gradient(90deg, var(--brass), transparent); }
+  .chapter span {
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--caramel); white-space: nowrap;
+  }
+  .section-head { max-width: 42rem; margin: 0 auto 2.8rem; text-align: center; }
   .section-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom: .7rem; }
   .section-head p { color: var(--foam); }
+
+  /* coffee-ring stains */
+  .coffee-ring {
+    position: absolute; pointer-events: none; z-index: 0;
+  }
+  .coffee-ring circle { fill: none; stroke: var(--caramel); stroke-linecap: round; }
 
   /* ---------- NAV ---------- */
   nav {
@@ -92,7 +114,19 @@
   }
   .hero-grid > div { max-width: 40rem; }
   .hero h1 { font-size: clamp(2.5rem, 5.2vw, 4rem); margin-bottom: 1.3rem; }
-  .hero h1 em { font-style: normal; color: var(--caramel); }
+  .hero h1 em {
+    font-style: normal; color: var(--caramel);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 14' preserveAspectRatio='none'%3E%3Cpath d='M4 9 C 42 3, 84 13, 126 7 S 200 4, 216 8' fill='none' stroke='%23CE9159' stroke-width='3.5' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E") left 100% / 100% .38em no-repeat;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    padding-bottom: .18em;
+  }
+  .link-plain {
+    align-self: center;
+    font-family: 'Space Mono', monospace; font-size: .85rem; letter-spacing: .06em;
+    color: var(--foam); text-decoration: underline; text-underline-offset: 4px;
+    text-decoration-color: var(--leather);
+  }
+  .link-plain:hover { color: var(--cream); text-decoration-color: var(--caramel); }
   .hero p.lede { color: var(--foam); max-width: 33rem; margin-bottom: 2rem; font-size: 1.12rem; }
   .btn-row { display: flex; gap: .9rem; flex-wrap: wrap; }
   .btn {
@@ -119,13 +153,15 @@
   }
 
   /* ---------- MENU + DIAL ---------- */
-  #menu { background: var(--roast); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); transition: background .6s ease; }
+  #menu { background: var(--roast); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); transition: background .6s ease; position: relative; overflow: hidden; }
+  #visit { position: relative; overflow: hidden; }
   #menu.deep { background: #241410; }
 
   .dial {
     display: flex; align-items: center; gap: 0; width: fit-content;
     border: 1.5px solid var(--brass); border-radius: 999px;
-    margin-bottom: .9rem; overflow: hidden;
+    margin: 0 auto .9rem; overflow: hidden;
+    position: relative; z-index: 1;
   }
   .dial button {
     appearance: none; border: 0; background: transparent; cursor: pointer;
@@ -142,6 +178,7 @@
   .dial-note {
     font-family: 'Space Mono', monospace; font-size: .78rem;
     color: var(--foam); margin-bottom: 2.2rem; min-height: 1.4em;
+    text-align: center;
   }
   .dial-note em { font-style: normal; color: var(--caramel); }
 
@@ -180,15 +217,34 @@
   }
   .menu-item { flex-wrap: wrap; }
 
-  .bites { margin-top: 3.5rem; }
-  .bites h3 { font-size: 1.35rem; margin-bottom: 1.2rem; }
-  .bites-row { display: flex; flex-wrap: wrap; gap: .6rem; }
-  .bite {
-    font-size: .92rem; color: var(--cream);
-    border: 1px solid var(--seam); border-radius: 999px;
-    padding: .45rem 1.1rem; background: rgba(92,58,38,.18);
+  /* lite bites as a counter receipt */
+  .bites { margin-top: 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; }
+  .bites-copy h3 { font-size: 1.6rem; margin-bottom: .7rem; }
+  .bites-copy p { color: var(--foam); max-width: 26rem; }
+  .receipt {
+    background: var(--cream); color: #33241B;
+    font-family: 'Space Mono', monospace; font-size: .85rem;
+    max-width: 23rem; width: 100%; justify-self: center;
+    padding: 1.6rem 1.5rem 2rem;
+    transform: rotate(.9deg);
+    box-shadow: 6px 8px 0 rgba(0,0,0,.35);
   }
-  .bite b { color: var(--caramel); font-weight: 700; font-family: 'Space Mono', monospace; font-size: .82rem; }
+  .receipt h3 {
+    font-family: 'Space Mono', monospace; font-weight: 700; font-size: .85rem;
+    letter-spacing: .16em; text-transform: uppercase; text-align: center;
+    padding-bottom: .8rem; margin-bottom: .4rem;
+    border-bottom: 1.5px dashed rgba(51,36,27,.5);
+  }
+  .receipt ul { list-style: none; }
+  .receipt li {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: .5rem 0; border-bottom: 1px dashed rgba(51,36,27,.3);
+  }
+  .receipt li b { font-weight: 700; }
+  .receipt .receipt-foot {
+    text-align: center; margin-top: 1rem; font-size: .72rem;
+    letter-spacing: .14em; text-transform: uppercase; color: rgba(51,36,27,.65);
+  }
 
   /* ---------- SPACES ---------- */
   .spaces-flex { display: grid; grid-template-columns: .62fr 1.38fr; gap: 1.4rem; align-items: stretch; }
@@ -240,6 +296,12 @@
   .library-grid { display: grid; grid-template-columns: 1fr .9fr; gap: 3.5rem; align-items: center; }
   .library-copy p { color: var(--foam); margin-bottom: 1.1rem; }
   .library-copy p b { color: var(--cream); }
+  .library-copy p.lib-lede::first-letter {
+    font-family: 'Young Serif', serif;
+    font-size: 3.1em; line-height: .82;
+    float: left; padding: .04em .14em 0 0;
+    color: var(--caramel);
+  }
 
   .lib-card {
     background: var(--cream); color: #33241B;
@@ -300,6 +362,9 @@
   @media (max-width: 900px) {
     .menu-list { grid-template-columns: 1fr; }
     .menu-flex { grid-template-columns: 1fr; }
+    .bites { grid-template-columns: 1fr; gap: 1.8rem; }
+    .bites-copy { text-align: center; }
+    .bites-copy p { margin: 0 auto; }
     .menu-photo-frame { aspect-ratio: 16 / 10; max-height: 340px; width: 100%; order: -1; }
     .spaces-flex { grid-template-columns: 1fr; }
     .spaces-photo { min-height: 240px; }
@@ -337,7 +402,7 @@
       <p class="lede">The Study is a coffeehouse built for lingering — curated pours, plush leather seats, a charging port at every table, and a library you can borrow from or buy out. After 2pm, the menu grows a proof.</p>
       <div class="btn-row">
         <a class="btn btn-solid" href="#menu">See the menu</a>
-        <a class="btn btn-ghost" href="#spaces">Tour the spaces</a>
+        <a class="link-plain" href="#spaces">or tour the spaces ↓</a>
       </div>
       <div class="hero-hours" aria-label="Hours summary">
         <div><b>Mon–Thu</b> 7a – 9p</div>
@@ -350,9 +415,13 @@
 </div>
 
 <section id="menu">
+  <svg class="coffee-ring" style="top:3rem; right:-2.5rem; width:170px; height:170px;" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="43" stroke-width="4.5" stroke-dasharray="150 26 44 18" opacity=".2"/>
+    <circle cx="52" cy="48" r="38" stroke-width="1.5" stroke-dasharray="88 36 58 26" opacity=".16"/>
+  </svg>
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">The pour</span>
+      <p class="chapter"><span>Ch. 1 · The Pour</span></p>
       <h2>Turn the dial to your strength</h2>
       <p>Three menus, one bar. Start curated, drift into the twists, and after 2pm the dial goes all the way to spirited.</p>
     </div>
@@ -373,15 +442,22 @@
     </div>
 
     <div class="bites">
-      <h3>Lite bites, all day</h3>
-      <div class="bites-row">
-        <span class="bite">Butter croissant <b>$4</b></span>
-        <span class="bite">Ham &amp; gruyère croissant <b>$7</b></span>
-        <span class="bite">Avocado toast <b>$9</b></span>
-        <span class="bite">Quiche of the day <b>$8</b></span>
-        <span class="bite">Charcuterie box <b>$14</b></span>
-        <span class="bite">Biscotti pair <b>$3</b></span>
-        <span class="bite">Seasonal fruit &amp; honey yogurt <b>$6</b></span>
+      <div class="bites-copy">
+        <h3>Something to hold the page open</h3>
+        <p>Lite bites from the counter, all day — nothing that needs two hands, everything that goes with a second cup.</p>
+      </div>
+      <div class="receipt" role="list" aria-label="Lite bites menu with prices">
+        <h3>The Study · Counter</h3>
+        <ul>
+          <li role="listitem">Butter croissant <b>$4</b></li>
+          <li role="listitem">Ham &amp; gruyère croissant <b>$7</b></li>
+          <li role="listitem">Avocado toast <b>$9</b></li>
+          <li role="listitem">Quiche of the day <b>$8</b></li>
+          <li role="listitem">Charcuterie box <b>$14</b></li>
+          <li role="listitem">Biscotti pair <b>$3</b></li>
+          <li role="listitem">Fruit &amp; honey yogurt <b>$6</b></li>
+        </ul>
+        <p class="receipt-foot">Served all day · Thank you</p>
       </div>
     </div>
   </div>
@@ -390,7 +466,7 @@
 <section id="spaces">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">The spaces</span>
+      <p class="chapter"><span>Ch. 2 · The Room</span></p>
       <h2>Plush leather, warm light, and a seat for every kind of day</h2>
       <p>Deep chesterfield seating throughout, charging ports built into every table, and rooms you can close the door on.</p>
     </div>
@@ -448,9 +524,9 @@
 <section id="library">
   <div class="wrap library-grid">
     <div class="library-copy">
-      <span class="eyebrow">The stacks</span>
+      <p class="chapter" style="justify-content:flex-start;"><span>Ch. 3 · The Stacks</span></p>
       <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem); margin-bottom:1rem;">A library where the due date is optional</h2>
-      <p>Every shelf in The Study is live: <b>borrow any book</b> with a house library card, or <b>buy it outright</b> and take it home for good. Finish it in a wingback with a cortado, or don't finish it at all — renewals are free with any drink.</p>
+      <p class="lib-lede">Every shelf in The Study is live: <b>borrow any book</b> with a house library card, or <b>buy it outright</b> and take it home for good. Finish it in a wingback with a cortado, or don't finish it at all — renewals are free with any drink.</p>
       <p>New and used, fiction and field guides, plus a rotating shelf picked by the baristas. Trade a finished book back in for credit toward your next pour.</p>
       <a class="btn btn-ghost" href="#visit" style="margin-top:.6rem;">Get a library card</a>
     </div>
@@ -473,9 +549,13 @@
 </section>
 
 <section id="visit">
+  <svg class="coffee-ring" style="bottom:2rem; left:-3rem; width:200px; height:200px;" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="43" stroke-width="4" stroke-dasharray="130 34 52 22" opacity=".18"/>
+    <circle cx="48" cy="52" r="37" stroke-width="1.5" stroke-dasharray="96 30 64 24" opacity=".14"/>
+  </svg>
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Visit</span>
+      <p class="chapter"><span>Epilogue · Visit</span></p>
       <h2>Pull up a chair</h2>
       <p>Walk-ins always; the Parlor books ahead. Spirited menu pours after 2pm for guests 21 and over.</p>
     </div>
